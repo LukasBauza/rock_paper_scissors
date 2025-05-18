@@ -29,58 +29,78 @@ function playRound(humanChoice, computerChoice) {
     let humanWin = "Human wins round!";
     let computerWin = "Computer wins round!";
 
+
     switch(humanChoice) {
         case "rock":
             if(computerChoice == "rock") {
-                console.log("draw");
             } else if(computerChoice == "paper") {
-                console.log(computerWin);
                 computerScore++;
             } else if(computerChoice == "scissors") {
-                console.log(humanWin);
                 humanScore++;
             }
             break;
 
         case "paper":
             if(computerChoice == "rock") {
-                console.log(humanWin);
                 humanScore++;
             } else if(computerChoice == "paper") {
-                console.log("draw");
             } else if(computerChoice == "scissors") {
-                console.log(computerWin);
                 computerScore++;
             }
             break;
 
         case "scissors":
             if(computerChoice == "rock") {
-                console.log(computerWin);
                 computerScore++;
             } else if(computerChoice == "paper") {
-                console.log(humanWin);
                 humanScore++;
             } else if(computerChoice == "scissors") {
-                console.log("draw");
             }
             break;
+    }
+
+    var human_score_div = document.querySelector("#human_score")
+    human_score_div.innerText = "Human Score: " + humanScore
+
+    var computer_score_div = document.querySelector("#computer_score")
+    computer_score_div.innerText = "Computer Score: " + computerScore
+}
+
+function checkWinner() {
+    var result_p = document.querySelector("#result")
+    if(computerScore == 5) {
+        result_p.innerText = "Computer wins the game!";
+        humanScore = 0
+        computerScore = 0
+    } else if (humanScore == 5) {
+        result_p.innerText = "Human wins the game!";
+        humanScore = 0
+        computerScore = 0
+    } else if (gameCount == 11) {
+        result_p.innerText = "The game is a draw!";
+        humanScore = 0
+        computerScore = 0
     }
 }
 
 function playGame() {
-    while((gameCount < 5) && ((computerScore < 3) || (humanScore < 3))) {
-        playRound(getHumanChoice(), getComputerChoice());
-        gameCount++;
-    }
+    var rock_button = document.querySelector("#rock_button")
+    var paper_button = document.querySelector("#paper_button")
+    var scissors_button = document.querySelector("#scissors_button")
 
-    if(computerScore == 3) {
-        console.log("Computer wins the game!");
-    } else if (humanScore == 3) {
-        console.log("Human wins the game!");
-    } else if (gameCount == 5) {
-        console.log("The game is a draw!");
-    }
+    rock_button.addEventListener("click", function() {
+        playRound("rock", getComputerChoice())
+        checkWinner()
+    });
+    paper_button.addEventListener("click", function() {
+        playRound("paper", getComputerChoice())
+        checkWinner()
+    });
+    scissors_button.addEventListener("click", function() {
+        playRound("scissors", getComputerChoice())
+        checkWinner()
+    });
+
 }
 
 playGame();
